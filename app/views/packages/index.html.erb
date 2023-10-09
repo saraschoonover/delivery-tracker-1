@@ -1,5 +1,6 @@
 <div>
   <div>
+    <%= current_user.email %>
     <h1>
       Delivery Tracker
     </h1>
@@ -14,7 +15,7 @@
     <h2>
       Expecting a package?
     </h2>
-
+     <% if current_user != nil %>
     <form action="/insert_package" method="post">
       <div>
         <label for="description_box">
@@ -44,8 +45,11 @@
         Log delivery
       </button>
     </form>
+     <% else %>
   </div>
 </div>
+  <p>You must <a href="/users/sign_in">sign in</a> to add a board.</p>
+    <% end %>
 
 <hr>
 <div>
@@ -55,16 +59,20 @@
       <% @list_of_packages.each do |a_package| %>
         <% if a_package.arrived == false %>
         <ul>
-          <li> <%= a_package.description %></li>
-          <p> Supposed to arrive on <%= a_package.supposed_to_arrive_on %></p>
-          <p><%= a_package.details %></p>  
-        </ul>
-            <div>
+          <li>
+            <div> <%= a_package.description %></div>
+            <div> Supposed to arrive on <%= a_package.supposed_to_arrive_on %></div>
+            <p><%= a_package.details %></p>  
+          
+
+        <div>
           <form action="/modify_package/<%= a_package.id %>" method="post">
             <input type="hidden" name="arrived" value="true">
             <button>Mark as received</button>
           </form>
         </div>
+        </li>
+        </ul>
         <% end %>
       <% end %>
   </div>
@@ -78,8 +86,8 @@
               <div><%= a_package.description %></div>
               <div>
                 <small>
-                  <p>Updated <%= time_ago_in_words(a_package.created_at) %> </p>
-                  <a href="/delete_package/<%= a_package.id %>">Delete</a>
+                  <p>Updated <%= time_ago_in_words(a_package.created_at) %>  <a href="/delete_package/<%= a_package.id %>">Delete</a></p>
+                 
                 </small>
               </div>
             </li>

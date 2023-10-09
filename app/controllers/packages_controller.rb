@@ -23,6 +23,7 @@ class PackagesController < ApplicationController
     the_package.supposed_to_arrive_on = params.fetch("query_supposed_to_arrive_on")
     the_package.details = params.fetch("query_details")
     the_package.arrived = params.fetch("arrived", false)
+    the_package.user_id = current_user.id
 
     if the_package.valid?
       the_package.save
@@ -40,6 +41,7 @@ class PackagesController < ApplicationController
     # the_package.supposed_to_arrive_on = params.fetch("query_supposed_to_arrive_on")
     # the_package.details = params.fetch("query_details")
     the_package.arrived = params.fetch("arrived", false)
+    the_package.user_id = current_user.id
 
     if the_package.valid?
       the_package.save
