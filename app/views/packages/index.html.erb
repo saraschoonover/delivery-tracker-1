@@ -53,7 +53,7 @@
     <h2>Waiting on</h2>
 
       <% @list_of_packages.each do |a_package| %>
-        
+        <% if a_package.arrived == false %>
         <ul>
           <li> <%= a_package.description %></li>
           <p> Supposed to arrive on <%= a_package.supposed_to_arrive_on %></p>
@@ -65,17 +65,26 @@
             <button>Mark as received</button>
           </form>
         </div>
+        <% end %>
       <% end %>
   </div>
   <hr>
   <div class="received">
     <h2>Received</h2>
-      <%= @the_package %>
-    <ul>
-      <li>
-        <div>
-        </div>
-      </li>
-    </ul>
+      <ul>
+        <% @list_of_packages.each do |a_package| %>
+          <% if a_package.arrived %>
+            <li>
+              <div><%= a_package.description %></div>
+              <div>
+                <small>
+                  <p>Updated <%= time_ago_in_words(a_package.created_at) %> </p>
+                  <a href="/delete_package/<%= a_package.id %>">Delete</a>
+                </small>
+              </div>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
   </div>
 </div>
